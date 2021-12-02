@@ -126,6 +126,9 @@ function dispOrder(orders) {
 				+ "<th>" + orders[i].delivDate + "</th></tr>";
 	}
 	document.getElementById("orderList").innerHTML = result;
+	document.getElementById("orderList").style.display = "table";
+	document.getElementById("pList").style.display = "none";
+
 }
 
 function updateProduct(index){
