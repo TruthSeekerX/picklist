@@ -146,7 +146,7 @@ function sortOrders(orders) {
 	return orders;
 }
 
-//search by orderID, customerID, customerName, deliveryDate
+//search by orderID, customerID, customerName
 function searchOrder() {
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
