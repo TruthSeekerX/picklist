@@ -119,8 +119,8 @@ function dispOrder(orders) {
     <th>DELIV. DATE</th></tr>";
 
 	for (let i in orders) {
-			result += "<tr><th>" + orders[i].status + "</th>"
-				+ "<th onClick='callProduct(" + i + ");'>" + orders[i].orderID + "</th>"
+			result += "<tr onClick='updateProduct(" + i + ");'><th>" + orders[i].status + "</th>"
+				+ "<th>" + orders[i].orderID + "</th>"
 				+ "<th>" + orders[i].cID + "</th>"
 				+ "<th>" + orders[i].comment + "</th>"
 				+ "<th>" + orders[i].delivDate + "</th></tr>";
@@ -128,7 +128,7 @@ function dispOrder(orders) {
 	document.getElementById("orderList").innerHTML = result;
 }
 
-function callProduct(index){
+function updateProduct(index){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	dispProduct(orders[index]);
