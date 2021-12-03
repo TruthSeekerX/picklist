@@ -1,9 +1,12 @@
+
+/*Fectch and initialise data from server - Siyuan Xu */
 function getData() {
 	fetch("http://www.cc.puv.fi/~asa/json/project.json")
 		.then(r => r.text())
 		.then(data => initOrder(data));
 }
 
+/*Prototype for Product - Siyuan Xu */
 function Product(pCode, pName, pDesc, sCode, quantity, uPrice, sPos, collection, status) {
 	this.pCode = pCode;
 	this.pName = pName;
@@ -20,6 +23,7 @@ function Product(pCode, pName, pDesc, sCode, quantity, uPrice, sPos, collection,
 	}
 };
 
+/*initialise Products data, add "colletion" and "status" attributes - Siyuan Xu */
 function initProducts(oldProducts) {
 	let newProducts = new Array();
 	for (let i in oldProducts) {
@@ -37,6 +41,7 @@ function initProducts(oldProducts) {
 	return newProducts;
 }
 
+/*Alternative initialise Products data, add "colletion" and "status" attributes - Siyuan Xu */
 /*
 function initProducts(products) {
 	for (let i in products) {
@@ -47,6 +52,7 @@ function initProducts(products) {
 }
 */
 
+/*initialise Order data, add "status" attributes - Siyuan Xu */
 function Order(orderID, cID, cName, invAddr, deliAddr, deliDate, rPerson, comment, tPrice, products, status) {
 	this.orderID = orderID;
 	this.cID = cID;
@@ -60,6 +66,8 @@ function Order(orderID, cID, cName, invAddr, deliAddr, deliDate, rPerson, commen
 	this.products = products;
 	this.status = status;		//default: red, ready:green
 };
+
+/* Alternative way to initialise order data - Siyuan Xu*/
 /*
 function initOrder(data) {
 	let orders = JSON.parse(data);
@@ -71,13 +79,13 @@ function initOrder(data) {
 }
 */
 
-//6-10-2020
-
+/* date string into date type, format "6-10-2020" - Siyuan Xu*/
 function toDate(dateStr) {
 	let parts = dateStr.split("-")
 	return new Date(parts[2], parts[1] - 1, parts[0])
 }
 
+/* initialise order data, add status - Siyuan Xu*/
 function initOrder(data) {
 	let oldOrder = JSON.parse(data);
 	let orders = new Array();
@@ -100,17 +108,21 @@ function initOrder(data) {
 	localStorage.setItem("localOrderData", JSON.stringify(orders));
 }
 
-function updateOrderList() {
+/* Siyuan Xu */
+function displayOrderList() {
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
-	dispOrder(orders);
+	htmlGenerateOrder(orders);
+	document.getElementById("orders").style.display = "";
+	document.getElementById("orderList").style.display = "table";
+	document.getElementById("products").style.display = "none";
+	document.getElementById("receipt").style.display = "none";
+
 }
 
-function dispOrder(orders) {
-	console.log(orders);
-	//	let sortedOrders = sortOrders(orders);
-	//	orders.sort((a,b) => toDate(b.delivDate) - toDate(a.delivDate));
-
+/* generate html code to display order table - Siyuan Xu */
+function htmlGenerateOrder(orders) {
+//	console.log(orders);
 	let result = "<tr>\
 	<th>STATUS</th>\
     <th>ORDER ID</th>\
@@ -119,27 +131,16 @@ function dispOrder(orders) {
     <th>DELIV. DATE</th></tr>";
 
 	for (let i in orders) {
-			result += "<tr onClick='updateProduct(" + i + ");'><th>" + orders[i].status + "</th>"
-				+ "<th>" + orders[i].orderID + "</th>"
-				+ "<th>" + orders[i].cID + "</th>"
-				+ "<th>" + orders[i].comment + "</th>"
-				+ "<th>" + orders[i].delivDate + "</th></tr>";
+		result += "<tr onClick='displayProduct(" + i + ");'><th>" + orders[i].status + "</th>"
+			+ "<th>" + orders[i].orderID + "</th>"
+			+ "<th>" + orders[i].cID + "</th>"
+			+ "<th>" + orders[i].comment + "</th>"
+			+ "<th>" + orders[i].delivDate + "</th></tr>";
 	}
 	document.getElementById("orderList").innerHTML = result;
-	document.getElementById("orderList").style.display = "table";
-	document.getElementById("pList").style.display = "none";
-
 }
 
-function updateProduct(index){
-	let ordersText = localStorage.getItem("localOrderData");
-	let orders = JSON.parse(ordersText);
-	dispProduct(orders[index]);
-//	orders[index].status = "yellow";
-	console.log(index);
-	console.log(orders[index]);
-}
-//sort the orders in descending order by delivery Date 
+/* Alternative function for sorting the orders in descending order by delivery Date - Siyuan Xu*/
 function sortOrders(orders) {
 	let temp = new Order;
 	for (let i in orders) {
@@ -154,62 +155,23 @@ function sortOrders(orders) {
 	return orders;
 }
 
-//search by orderID, customerID, customerName
+/* search by orderID, customerID, customerName - Siyuan Xu*/
 function searchOrder() {
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let keyword = document.getElementById("searchText").value;
 	let result = new Array;
-	let rIndex = 0;
+	let resultIndex = 0;
 	for (let i in orders) {
 		if (keyword == orders[i].orderID
 			|| keyword == orders[i].cID
 			|| keyword == orders[i].cName
 		) {
 			result.push(new Order);
-			result[rIndex] = orders[i];
-//			console.log(result[rIndex], orders[i]);
-			rIndex++;
+			result[resultIndex] = orders[i];
+			resultIndex++;
 		}
 	}
-	console.log(result);
+//	console.log(result);
 	dispOrder(result);
 }
-
-
-function dispProduct(order) {
-    document.getElementById("orderList").style.display = "none";
-    document.getElementById("pList").style.display = "table";
-	console.log(order);
-	//	let sortedOrders = sortOrders(orders);
-	//	orders.sort((a,b) => toDate(b.delivDate) - toDate(a.delivDate));
-
-	let result = "<tr>\
-	<th>CheckBox</th>\
-    <th>Product Name</th>\
-	<th>Product ID</th>\
-	<th>Shelf Place</th>\
-    <th>Quantity</th></tr>";
-
-	for (let i in order.products) {
-			result += "<tr><th>" + "empty" + "</th>"
-				+ "<th>" + order.products[i].pName + "</th>"
-				+ "<th>" + order.products[i].pCode + "</th>"
-				+ "<th>" + order.products[i].sPos + "</th>"
-				+ "<th>" + order.products[i].qty + "</th></tr>";
-	}
-	document.getElementById("pList").innerHTML = result;
-}
-
-
-
-
-
-//Search for order with different criterias
-//what is clean packing list.
-//set status for ORDER and PRODUCT
-//Login needed
-
-
-
-
