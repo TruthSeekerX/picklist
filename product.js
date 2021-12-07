@@ -115,7 +115,8 @@ function updateOrderData(){
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
 	for(let i in orders[orderIndex].products){
-		orders[orderIndex].products[i].collection = document.getElementById("delivered"+i).value;
+		let input_value = document.getElementById("delivered"+i).value;
+		orders[orderIndex].products[i].collection = input_value == "" ? 0 : input_value;
 		console.log(document.getElementById("delivered"+i).value);
 		console.log(orders[orderIndex].products[i].collection);
 	}
