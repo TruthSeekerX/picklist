@@ -173,5 +173,5 @@ function searchOrder() {
 		}
 	}
 //	console.log(result);
-	dispOrder(result);
+	htmlGenerateOrder(result);
 }
