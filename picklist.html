@@ -17,7 +17,7 @@
 </head>
 
 <body onload="getData();pageInit();">
-    <h2 onclick="displayOrderList();">NinjaTurtle Oy</h2>
+    <h2 onclick="updateOrderData('yellow');displayOrderList();">NinjaTurtle Oy</h2>
     <form id="login">
         <div class="imgcontainer">
             <img src="avatar.jpg" alt="Avatar" class="avatar">
@@ -51,7 +51,7 @@
 
     <div id="products">
         <table id="productList"></table>
-        <button type="button" id="readyButton" onclick="updateOrderData();displayReceipt();">Ready</button>
+        <button type="button" id="readyButton" onclick="displayReceipt();">Ready</button>
     </div>
 
     <div id="receipt">

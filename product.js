@@ -1,12 +1,12 @@
 /* Siyuan Xu */
 function displayProduct(index) {
+	localStorage.setItem("currentOrderIndex",index);
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	htmlGenerateProduct(orders[index]);
-	//	orders[index].status = "yellow";
+	orders[index].status = "yellow";
 	document.getElementById("orderList").style.display = "none";
 	document.getElementById("products").style.display = "table";
-	localStorage.setItem("currentOrderIndex",index);
 }
 
 //generate html code for picking list (LILI)
@@ -28,7 +28,7 @@ function htmlGenerateProduct(order) {
 			+ "<th>" + order.products[i].pCode + "</th>"
 			+ "<th>" + order.products[i].sPos + "</th>"
 			+ "<th>" + order.products[i].qty + "</th>"
-			+ "<th><input id='delivered" + i + "' type='text'></th></tr>";
+			+ "<th><input id='delivered" + i + "' type='text' value='" + order.products[i].collection + "'></th></tr>";
 	}
 	document.getElementById("productList").innerHTML = result;
 }
@@ -38,11 +38,11 @@ function htmlGenerateProduct(order) {
 /* moved html generation functionality to own function */
 /* edited by Siyuan Xu 3.12.2021*/
 function displayReceipt(){
+	
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let i = localStorage.getItem("currentOrderIndex");
-
-    orders[i].status = "green";
+    updateOrderData("green");
 
 	document.getElementById("orders").style.display = "none";
 	document.getElementById("products" ).style.display = "none";
@@ -110,7 +110,7 @@ function htmlGenerateReceiptPrintButton(){
 }
 
 /* Push/Update the current order data in localstorage - siyuan xu */
-function updateOrderData(){
+function updateOrderData(status){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
@@ -120,6 +120,6 @@ function updateOrderData(){
 		console.log(document.getElementById("delivered"+i).value);
 		console.log(orders[orderIndex].products[i].collection);
 	}
-	orders[orderIndex].status = "green";
+	orders[orderIndex].status = status;
 	localStorage.setItem("localOrderData", JSON.stringify(orders));
 }
