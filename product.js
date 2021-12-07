@@ -4,7 +4,8 @@ function displayProduct(index) {
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	htmlGenerateProduct(orders[index]);
-	orders[index].status = "yellow";
+//	orders[index].status = "yellow";
+	updateOrderStatus("yellow");
 	document.getElementById("orderList").style.display = "none";
 	document.getElementById("products").style.display = "table";
 }
@@ -38,16 +39,15 @@ function htmlGenerateProduct(order) {
 /* moved html generation functionality to own function */
 /* edited by Siyuan Xu 3.12.2021*/
 function displayReceipt(){
-	
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let i = localStorage.getItem("currentOrderIndex");
-    updateOrderData("green");
-
+	
 	document.getElementById("orders").style.display = "none";
 	document.getElementById("products" ).style.display = "none";
 	document.getElementById("receipt").style.display = "";
 	
+	updateOrderStatus("green");
 	htmlGenerateReceiptOrderInfo(orders[i]);
 	htmlGenerateReceiptProductInfo(orders[i]);
 	htmlGenerateReceiptPrintButton();
@@ -110,7 +110,7 @@ function htmlGenerateReceiptPrintButton(){
 }
 
 /* Push/Update the current order data in localstorage - siyuan xu */
-function updateOrderData(status){
+function updateOrderData(){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
@@ -120,6 +120,14 @@ function updateOrderData(status){
 		console.log(document.getElementById("delivered"+i).value);
 		console.log(orders[orderIndex].products[i].collection);
 	}
+//	orders[orderIndex].status = status;
+	localStorage.setItem("localOrderData", JSON.stringify(orders));
+}
+
+function updateOrderStatus(status){
+	let ordersText = localStorage.getItem("localOrderData");
+	let orders = JSON.parse(ordersText);
+	let orderIndex = localStorage.getItem("currentOrderIndex");
 	orders[orderIndex].status = status;
 	localStorage.setItem("localOrderData", JSON.stringify(orders));
 }
