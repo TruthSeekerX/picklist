@@ -41,12 +41,10 @@ function displayReceipt(){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let i = localStorage.getItem("currentOrderIndex");
-	
 	document.getElementById("orders").style.display = "none";
 	document.getElementById("products" ).style.display = "none";
 	document.getElementById("receipt").style.display = "";
-	
-	updateOrderData("green");
+	console.log("orderno.", orders[i].products);
 	htmlGenerateReceiptOrderInfo(orders[i]);
 	htmlGenerateReceiptProductInfo(orders[i]);
 	htmlGenerateReceiptPrintButton();
@@ -116,7 +114,9 @@ function updateOrderData(status){
 	for(let i in orders[orderIndex].products){
 		let input_value = document.getElementById("delivered"+i).value;
 		orders[orderIndex].products[i].collection = input_value == "" ? 0 : input_value;
+		console.log("delivered:", input_value);
 	}
+	console.log("orderinfo", orders[orderIndex].products);
 	if(orders[orderIndex].status != "green" && status != ""){ 
 		orders[orderIndex].status = status;
 	}
@@ -127,6 +127,7 @@ function updateOrderStatus(status){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
+
 	if(orders[orderIndex].status != "green" && status != ""){ 
 		orders[orderIndex].status = status;
 	}
