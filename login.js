@@ -1,5 +1,3 @@
-
-
 /* login check with sha1 encryption - Siyuan Xu*/ 
 /*
 function validate() {
