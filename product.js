@@ -4,7 +4,6 @@ function displayProduct(index) {
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	htmlGenerateProduct(orders[index]);
-//	orders[index].status = "yellow";
 	updateOrderStatus("yellow");
 	document.getElementById("orderList").style.display = "none";
 	document.getElementById("products").style.display = "table";
@@ -47,7 +46,7 @@ function displayReceipt(){
 	document.getElementById("products" ).style.display = "none";
 	document.getElementById("receipt").style.display = "";
 	
-	updateOrderStatus("green");
+	updateOrderData("green");
 	htmlGenerateReceiptOrderInfo(orders[i]);
 	htmlGenerateReceiptProductInfo(orders[i]);
 	htmlGenerateReceiptPrintButton();
@@ -110,17 +109,17 @@ function htmlGenerateReceiptPrintButton(){
 }
 
 /* Push/Update the current order data in localstorage - siyuan xu */
-function updateOrderData(){
+function updateOrderData(status){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
 	for(let i in orders[orderIndex].products){
 		let input_value = document.getElementById("delivered"+i).value;
 		orders[orderIndex].products[i].collection = input_value == "" ? 0 : input_value;
-		console.log(document.getElementById("delivered"+i).value);
-		console.log(orders[orderIndex].products[i].collection);
 	}
-//	orders[orderIndex].status = status;
+	if(orders[orderIndex].status != "green" && status != ""){ 
+		orders[orderIndex].status = status;
+	}
 	localStorage.setItem("localOrderData", JSON.stringify(orders));
 }
 
@@ -128,6 +127,8 @@ function updateOrderStatus(status){
 	let ordersText = localStorage.getItem("localOrderData");
 	let orders = JSON.parse(ordersText);
 	let orderIndex = localStorage.getItem("currentOrderIndex");
-	orders[orderIndex].status = status;
+	if(orders[orderIndex].status != "green" && status != ""){ 
+		orders[orderIndex].status = status;
+	}
 	localStorage.setItem("localOrderData", JSON.stringify(orders));
 }
