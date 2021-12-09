@@ -23,12 +23,12 @@ function htmlGenerateProduct(order) {
 	<th>Delivered</th></tr>";
 
 	for (let i in order.products) {
-		result += "<tr><th><input type='checkbox'></th>"
-			+ "<th>" + order.products[i].pName + "</th>"
-			+ "<th>" + order.products[i].pCode + "</th>"
-			+ "<th>" + order.products[i].sPos + "</th>"
-			+ "<th>" + order.products[i].qty + "</th>"
-			+ "<th><input id='delivered" + i + "' type='text' value='" + order.products[i].collection + "'></th></tr>";
+		result += "<tr><td><input type='checkbox'></td>"
+			+ "<td>" + order.products[i].pName + "</td>"
+			+ "<td>" + order.products[i].pCode + "</td>"
+			+ "<td>" + order.products[i].sPos + "</td>"
+			+ "<td>" + order.products[i].qty + "</td>"
+			+ "<td><input id='delivered" + i + "' type='text' value='" + order.products[i].collection + "'></td></tr>";
 	}
 	document.getElementById("productList").innerHTML = result;
 }
@@ -89,11 +89,11 @@ function htmlGenerateReceiptProductInfo(order) {
 	<th>Delivered</th></tr>";
 
 	for (let i in order.products) {
-		result += "<tr><th>" + order.products[i].pName + "</th>"
-			+ "<th>" + order.products[i].pCode + "</th>"
-			+ "<th>" + order.products[i].uPrice + "</th>"
-			+ "<th>" + order.products[i].qty + "</th>"
-			+ "<th>" + order.products[i].collection + "</th></tr>";
+		result += "<tr><td>" + order.products[i].pName + "</td>"
+			+ "<td>" + order.products[i].pCode + "</td>"
+			+ "<td>" + order.products[i].uPrice + "</td>"
+			+ "<td>" + order.products[i].qty + "</td>"
+			+ "<td>" + order.products[i].collection + "</td></tr>";
 	}
 	document.getElementById("receiptProductInfo").innerHTML = result;
 };
