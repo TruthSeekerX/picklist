@@ -47,7 +47,9 @@ function displayReceipt(){
 	console.log("orderno.", orders[i].products);
 	htmlGenerateReceiptOrderInfo(orders[i]);
 	htmlGenerateReceiptProductInfo(orders[i]);
-	htmlGenerateReceiptPrintButton();
+	if(document.getElementById("button")==null){
+		htmlGenerateReceiptPrintButton();
+	}
 }
 
 //show single order info list Final (LILI)

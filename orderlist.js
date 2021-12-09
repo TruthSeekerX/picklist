@@ -131,11 +131,11 @@ function htmlGenerateOrder(orders) {
     <th>DELIV. DATE</th></tr>";
 
 	for (let i in orders) {
-		result += "<tr onClick='displayProduct(" + i + ");'><td bgcolor= '" + orders[i].status + "'></th>"
-			+ "<th>" + orders[i].orderID + "</td>"
-			+ "<th>" + orders[i].cID + "</td>"
-			+ "<th>" + orders[i].comment + "</td>"
-			+ "<th>" + orders[i].delivDate + "</td></tr>";
+		result += "<tr onClick='displayProduct(" + i + ");'><td bgcolor= '" + orders[i].status + "'></td>"
+			+ "<td>" + orders[i].orderID + "</td>"
+			+ "<td>" + orders[i].cID + "</td>"
+			+ "<td>" + orders[i].comment + "</td>"
+			+ "<td>" + orders[i].delivDate + "</td></tr>";
 	}
 	document.getElementById("orderList").innerHTML = result;
 }
