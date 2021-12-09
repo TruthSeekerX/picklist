@@ -15,11 +15,11 @@ function displayProduct(index) {
 /* edited by siyuan 3.12.2021 */
 function htmlGenerateProduct(order) {
 	let result = "<tr>\
-	<th>CheckBox</th>\
+	<th>Collected</th>\
     <th>Product Name</th>\
 	<th>Product ID</th>\
 	<th>Shelf Place</th>\
-    <th>Quantity</th>\
+    <th>Ordered</th>\
 	<th>Delivered</th></tr>";
 
 	for (let i in order.products) {
@@ -57,15 +57,15 @@ function displayReceipt(){
 function htmlGenerateReceiptOrderInfo(order) {
 	let result = "<dl><dt>Order ID:</dt>"
 		+ "<dd>" + order.orderID + "</dd>"
-		+ "<dt>Customer:</dt>"
+		+ "<dt>Customer Name:</dt>"
 		+ "<dd>" + order.cName + "</dd>"
-		+ "<dt>Address:</dt>"
+		+ "<dt>Delivery Address:</dt>"
 		+ "<dd>" + order.delivAddr + "</dd>"
-		+ "<dt>Sales Rep:</dt>"
+		+ "<dt>Sales Reppresentative:</dt>"
 		+ "<dd>" + order.rPerson + "</dd>"
-		+ "<dt>DElivery date:</dt>"
+		+ "<dt>Date of Delivery:</dt>"
 		+ "<dd>" + order.delivDate + "</dd>"
-		+ "<dt>Customers comment:</dt>"
+		+ "<dt>Order comment:</dt>"
 		+ "<dd>" + order.comment + "</dd></dl>";
 
 	document.getElementById("receiptOrderInfo").innerHTML = result;
@@ -79,8 +79,8 @@ function htmlGenerateReceiptProductInfo(order) {
 	let result = "<tr>\
     <th>Product Name</th>\
 	<th>Product ID</th>\
-	<th>Unit Price(Euro)</th>\
-    <th>Quantity Ordered</th>\
+	<th>Unit Price(€)</th>\
+    <th>Ordered</th>\
 	<th>Delivered</th></tr>";
 
 	for (let i in order.products) {
