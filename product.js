@@ -47,8 +47,11 @@ function displayReceipt(){
 	console.log("orderno.", orders[i].products);
 	htmlGenerateReceiptOrderInfo(orders[i]);
 	htmlGenerateReceiptProductInfo(orders[i]);
-	if(document.getElementById("button")==null){
+	if(document.getElementById("print")==null){
+		console.log(document.getElementById("print"));
 		htmlGenerateReceiptPrintButton();
+	}else{
+		document.getElementById("print").style.display = "";
 	}
 }
 
